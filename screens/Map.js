@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,11 @@ import {
 import * as Location from "expo-location";
 
 export default function Map() {
+  const [pin, setPin] = useState({
+    latitude: 26.277683,
+    longitude: 73.022701,
+  });
+
   // const [location, setLocation] = useState(null);
   // const [errorMsg, setErrorMsg] = useState(null);
 
@@ -46,11 +51,26 @@ export default function Map() {
           longitudeDelta: 0.0421,
         }}
       >
-        <Marker coordinate={{ latitude: 26.277683, longitude: 73.022701 }}>
+        <Marker
+          coordinate={{ latitude: 26.277683, longitude: 73.022701 }}
+          draggable={true}
+          onDragStart={(e) => {
+            console.log("Drag Start", e.nativeEvent.coordinate);
+          }}
+          onDragEnd={(e) => {
+            console.log("Drag End", e.nativeEvent.coordinate);
+
+            setPin({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.latitude,
+            });
+          }}
+        >
           <Callout>
             <Text>This is a Callout</Text>
           </Callout>
         </Marker>
+        <Circle center={pin} radius={800} />
       </MapView>
     </SafeAreaView>
   );
