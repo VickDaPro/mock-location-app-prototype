@@ -7,11 +7,16 @@ import {
   Dimensions,
   Platform,
   SafeAreaView,
+  Button,
 } from "react-native";
 import * as Location from "expo-location";
 
 export default function Map() {
   const [pin, setPin] = useState({
+    latitude: 26.277683,
+    longitude: 73.022701,
+  });
+  const [location, setLocation] = useState({
     latitude: 26.277683,
     longitude: 73.022701,
   });
@@ -72,6 +77,32 @@ export default function Map() {
         </Marker>
         <Circle center={pin} radius={800} />
       </MapView>
+      <View
+        style={{
+          position: "absolute", //use absolute position to show button on top of the map
+          top: "92%", //for center align
+          alignSelf: "flex-start", //for align to left
+          paddingLeft: 20,
+        }}
+      >
+        <Button
+          onPress={() => console.log("Pressed")}
+          title="Change Location"
+        ></Button>
+      </View>
+      <View
+        style={{
+          position: "absolute", //use absolute position to show button on top of the map
+          top: "92%", //for center align
+          alignSelf: "flex-end", //for align to right
+          paddingRight: 20,
+        }}
+      >
+        <Button
+          onPress={() => console.log("Pressed")}
+          title="Current location"
+        ></Button>
+      </View>
     </SafeAreaView>
   );
 }
